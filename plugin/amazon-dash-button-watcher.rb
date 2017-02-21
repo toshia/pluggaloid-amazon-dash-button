@@ -28,7 +28,7 @@ Plugin.create(:amazon_dash_button_observer) do
     observer = Thread.new do
       Thread.pass
       observer.abort_on_exception = true
-      IO.popen("tcpdump -i #{interface} -e", 'r').lazy.select{|line|
+      IO.popen("/usr/sbin/tcpdump -i #{interface} -e", 'r').lazy.select{|line|
         line.include?('Broadcast, ethertype ARP')
       }.map{|line|
         /(?:[\da-f]{2}:){5}[\da-f]{2}/.match(line)
